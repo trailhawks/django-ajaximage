@@ -5,5 +5,5 @@ from .forms import AjaxImageUploadForm
 
 
 class MyView(FormView):
-    template_name = 'form.html'
+    template_name = "form.html"
     form_class = AjaxImageUploadForm

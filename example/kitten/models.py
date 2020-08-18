@@ -4,8 +4,9 @@ from ajaximage.fields import AjaxImageField
 
 class Kitten(models.Model):
     image = AjaxImageField()
-    thumbnail = AjaxImageField(upload_to='thumbnails', max_height=200,
-                               max_width=200, crop=False)
+    thumbnail = AjaxImageField(
+        upload_to="thumbnails", max_height=200, max_width=200, crop=False
+    )
 
     def __str__(self):
         return str(self.thumbnail)

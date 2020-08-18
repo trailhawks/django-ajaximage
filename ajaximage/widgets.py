@@ -21,51 +21,55 @@ class AjaxImageWidget(widgets.TextInput):
             <div class="bar"></div>
         </div>
     </div>
-    """ % _(u"Remove")
+    """ % _(
+        u"Remove"
+    )
 
     class Media:
-        js = (
-            'ajaximage/js/ajaximage.js',
-        )
+        js = ("ajaximage/js/ajaximage.js",)
         css = {
-            'all': (
-                'ajaximage/css/bootstrap-progress.min.css',
-                'ajaximage/css/styles.css',
+            "all": (
+                "ajaximage/css/bootstrap-progress.min.css",
+                "ajaximage/css/styles.css",
             )
         }
 
     def __init__(self, *args, **kwargs):
-        self.upload_to = kwargs.pop('upload_to', '')
-        self.max_width = kwargs.pop('max_width', 0)
-        self.max_height = kwargs.pop('max_height', 0)
-        self.crop = kwargs.pop('crop', 0)
+        self.upload_to = kwargs.pop("upload_to", "")
+        self.max_width = kwargs.pop("max_width", 0)
+        self.max_height = kwargs.pop("max_height", 0)
+        self.crop = kwargs.pop("crop", 0)
         super(AjaxImageWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None, renderer=None):
         final_attrs = self.build_attrs(attrs)
-        element_id = final_attrs.get('id')
+        element_id = final_attrs.get("id")
 
-        kwargs = {'upload_to': self.upload_to,
-                  'max_width': self.max_width,
-                  'max_height': self.max_height,
-                  'crop': self.crop}
+        kwargs = {
+            "upload_to": self.upload_to,
+            "max_width": self.max_width,
+            "max_height": self.max_height,
+            "crop": self.crop,
+        }
 
-        upload_url = reverse('ajaximage', kwargs=kwargs)
+        upload_url = reverse("ajaximage", kwargs=kwargs)
 
         # NB convert to string and do not rely on value.url
         # value.url fails when rendering form with validation errors because
         # form value is not a FieldFile. Use storage.url and file_path - works
         # with FieldFile instances and string formdata
-        file_path = str(value) if value else ''
-        file_url = default_storage.url(file_path) if value else ''
+        file_path = str(value) if value else ""
+        file_url = default_storage.url(file_path) if value else ""
 
         file_name = os.path.basename(file_url)
 
-        output = self.html.format(upload_url=upload_url,
-                             file_url=file_url,
-                             file_name=file_name,
-                             file_path=file_path,
-                             element_id=element_id,
-                             name=name)
+        output = self.html.format(
+            upload_url=upload_url,
+            file_url=file_url,
+            file_name=file_name,
+            file_path=file_path,
+            element_id=element_id,
+            name=name,
+        )
 
         return mark_safe(output)

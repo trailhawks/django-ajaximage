@@ -9,7 +9,7 @@ admin.autodiscover()
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('ajaximage/', include('ajaximage.urls')),
-    path('form/', include('kitten.urls')),
+    path("admin/", admin.site.urls),
+    path("ajaximage/", include("ajaximage.urls")),
+    path("form/", include("kitten.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
